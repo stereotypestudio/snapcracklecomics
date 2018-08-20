@@ -12,14 +12,6 @@ import Welcome from './Users/Welcome';
 
 ReactDOM.render(
 
-<BrowserRouter>
-<div>
-<Switch>
-          <Route exact path='/register' component = {CreateUserComponent} />
-          <Route exact path='/dashboard' component = {Dashboard} />
-          <Route exact path='/welcome' component = {Welcome} />
-</Switch>
-<App />
-</div>
-</BrowserRouter>, document.getElementById('root'));
+<App></App>, document.getElementById('root'));
+
 registerServiceWorker();

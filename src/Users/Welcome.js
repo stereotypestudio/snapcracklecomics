@@ -48,18 +48,25 @@ class Welcome extends Component {
     handleSubmit(event){
         event.preventDefault();
         var s = this.state;
+
         firebase.firestore().collection('users').add({
             firstname: s.firstName,
             lastname: s.lastName,
             email: s.email,
+            username: s.username,
             password: s.password,
             securityQuestion: s.securityQuestion,
             securityAnswer: s.securityAnswer,
             isAdmin: true
         })
         .then(function(){
-            firebase.firestore().collection('setup').add({
+            firebase.firestore().collection('setup').doc('comicSettings').set({
                 comicName: s.comicName
+            })
+        })
+        .then(function(docRef){
+            firebase.firestore().collection('settings').doc("setup").set({
+                    registered: true
             })
         })
         .then(function(){

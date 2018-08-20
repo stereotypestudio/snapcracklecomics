@@ -4,9 +4,11 @@ import firebase from './firebase'
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 
 import  Dashboard  from './Dashboard/Dashboard';
-import ComicComponent from './Comics/ComicComponent';
-import CreateUserComponent from './Users/CreateUserComponent';
-import UploadComicComponent from './Comics/UploadComicComponent';
+import Welcome from './Users/Welcome';
+import Home from './Home/Home';
+import AllComicComponent from './Comics/AllComicComponent';
+import Login from './Users/Login';
+import Settings from './Home/Settings';
 
 class App extends Component {
 
@@ -17,40 +19,22 @@ class App extends Component {
   
   }
 
-  componentDidMount() {   
-    var db = firebase.firestore();
-    var initialRef = db.collection("settings").doc("setup").get()
-    .then(function (doc){
-      if (doc.exists){
-        //good to go
-        this.setState({notRegistered: false});
-      } else {
-        this.setState({notRegistered: true});
-      };
-    }.bind(this))
-  }
-
-   handleChange(e){
-    this.setState({
-      title: e.target.value
-    })
-   }
-
-   handleSubmit = e => {
-    e.preventDefault()
-    firebase.firestore().doc('courses/online').set({name: this.state.title})
-  }
-
   render() {
-    // if(this.state.notRegistered === true){
-    //   return <Redirect to='/register' />
-    // }
 
-    if (this.state.notRegistered === true){
-      return <Redirect to="/welcome" />
-    } else {
-      return <Redirect to = "/dashboard" />
-    }
+    return(
+      <Router>
+        <div>
+          
+          <Route path="/" component={Home} exact />
+          <Route path="/welcome" component={Welcome}  />
+          <Route path="/dashboard" component={Dashboard}  />
+          <Route path="/comics" component={AllComicComponent} />
+          <Route path="/login" component={Login}  />
+          <Route path="/settings" component={Settings}  />
+
+        </div>
+      </Router>
+    )
    
   }
 }
