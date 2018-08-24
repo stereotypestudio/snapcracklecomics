@@ -70,27 +70,23 @@ class Settings extends Component {
             return <Redirect to="/dashboard"/>
         } else {
         return(
-            <div className = "container">
-            <div className = "row">
-            <div className = "col s6">
-            <h4>Log in:</h4>
-            <form onSubmit = {this.handleSubmit}>
-                <div>
-                    <label htmlFor="comicName">Comic's Name</label>
-                    <input type="text" onChange = {this.handleChange} name = "comicName" />
-                </div>
-                <div>
-                    <label htmlFor = "logoImageFile">Logo Image</label>
-                    <input type="file" onChange={this.LogoFileChangedHandler} />
-                </div>
-                 <div>
-                    <label htmlFor = "headerImageFile">Header Image</label>
-                    <input type="file" onChange={this.HeaderFileChangedHandler} />
-                 </div>
-                    <button type = "submit">Login</button>
-            </form>
-            </div>
-            </div>
+            <div>
+                <h4>Settings:</h4>
+                <form onSubmit = {this.handleSubmit}>
+                    <div>
+                        <label htmlFor="comicName">Comic's Name</label>
+                        <input type="text" onChange = {this.handleChange} name = "comicName" />
+                    </div>
+                    <div>
+                        <label htmlFor = "logoImageFile">Logo Image</label>
+                        <input type="file" onChange={this.LogoFileChangedHandler} />
+                    </div>
+                    <div>
+                        <label htmlFor = "headerImageFile">Header Image</label>
+                        <input type="file" onChange={this.HeaderFileChangedHandler} />
+                    </div>
+                        <button type = "submit">Save</button>
+                </form>
             </div>
         )
     }

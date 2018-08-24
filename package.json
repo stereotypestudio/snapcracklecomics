@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "firebase": "^5.3.1",
     "formik": "^1.0.3",
+    "muicss": "^0.9.39",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-materialize": "^2.4.5",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "yup": "^0.26.2"

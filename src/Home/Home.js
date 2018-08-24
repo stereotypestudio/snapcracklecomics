@@ -5,6 +5,8 @@ import firebase from '../firebase'
 import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
 import ComicComponent from '../Comics/ComicComponent';
 import Header from '../Home/Header';
+import {ThemeContext, themes} from '../theme-settings';
+
 
 class Home extends Component {
 
@@ -13,7 +15,10 @@ class Home extends Component {
         this.state = {
             notRegistered: null,
             comicName: "",
+            theme: themes.light
         }
+
+        this.toggleTheme = this.toggleTheme.bind(this);
     }
 
     componentDidMount() {   
@@ -33,6 +38,15 @@ class Home extends Component {
         }.bind(this))
       }
 
+      toggleTheme = () => {
+        this.setState(state => ({
+          theme:
+            state.theme === themes.dark
+              ? themes.light
+              : themes.dark,
+        }));
+      };
+
     render(){
 
         if(this.state.notRegistered) {
@@ -41,12 +55,16 @@ class Home extends Component {
             )
         } else {
             return(
-                <div>
-                
-                <Header />
-                Welcome to {this.state.comicName}!
-                {/* <ComicComponent /> */}
-                </div>
+                <ThemeContext.Provider value={this.state.theme}>
+                    <div>
+                        <div className = "App">
+                            <Header />
+                            <button onClick = {this.toggleTheme}>Change theme!</button>
+                            Welcome to {this.state.comicName}!
+                            <ComicComponent />
+                        </div>
+                    </div>
+                </ThemeContext.Provider>
             )
         }
     }

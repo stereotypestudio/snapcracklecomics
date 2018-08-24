@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import firebase from '../firebase';
+import firebase, {auth, provider} from '../firebase';
 import {Router, Route, Redirect } from 'react-router-dom';
 
 class Login extends Component {
@@ -7,9 +7,10 @@ class Login extends Component {
     constructor(){
         super();
         this.state = {
-            username: "",
+            email: "",
             password: "",
-            toDash: false
+            toDash: false,
+            toHome: false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,15 +40,29 @@ class Login extends Component {
         //         //not found
         //     }
         // })
-        sessionStorage.setItem("loggedIn", "yes")
-        console.log("Redirect...");
-        this.setState({toDash: true});
+        auth.signInWithPopup(provider)
+        .then((doc) => {
+            return doc.user.uid
+        })
+        .then((id) => {
+            firebase.firestore().collection('users').doc(id).get()
+            .then((doc) => {
+                if(doc.data().isAdmin === true){
+                    this.setState({toDash: true})
+                } else {
+                    this.setState({toHome: true})
+                }
+            })
+        })
+        
     }
 
     render(){
         
         if(this.state.toDash === true){
             return <Redirect to="/dashboard"/>
+        } else if (this.state.toHome === true){
+            return <Redirect to="/" />
         } else {
         return(
             <div className = "container">
@@ -55,10 +70,10 @@ class Login extends Component {
             <div className = "col s6">
             <h4>Log in:</h4>
             <form onSubmit = {this.handleSubmit}>
-                <label htmlFor="username">Username</label>
-                <input type="text" onChange = {this.handleChange} name = "username" />
+                <label htmlFor="username">Email</label>
+                <input type="email" onChange = {this.handleChange} name = "email" />
                 <label htmlFor="password">Password</label>
-                <input type="text" onChange = {this.handleChange} name = "password" />
+                <input type="password" onChange = {this.handleChange} name = "password" />
                 <button type = "submit">Login</button>
             </form>
             </div>
