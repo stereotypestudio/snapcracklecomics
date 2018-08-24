@@ -15,7 +15,8 @@ class Home extends Component {
         this.state = {
             notRegistered: null,
             comicName: "",
-            theme: themes.light
+            theme: themes.light, 
+            isLoading: true
         }
 
         this.toggleTheme = this.toggleTheme.bind(this);
@@ -34,6 +35,7 @@ class Home extends Component {
             this.setState({notRegistered: false});
           } else {
             this.setState({notRegistered: true});
+            this.setState({isLoading: false})
           };
         }.bind(this))
       }
@@ -48,24 +50,32 @@ class Home extends Component {
       };
 
     render(){
+        var {isLoading} = this.state;
 
-        if(this.state.notRegistered) {
-            return(
-                <p>Please finish registration! <NavLink to="/welcome">Register here!</NavLink> </p>
-            )
+        if(isLoading){
+            return <p>Loading...</p>
         } else {
-            return(
-                <ThemeContext.Provider value={this.state.theme}>
-                    <div>
-                        <div className = "App">
-                            <Header />
-                            <button onClick = {this.toggleTheme}>Change theme!</button>
-                            Welcome to {this.state.comicName}!
-                            <ComicComponent />
+            if(this.state.notRegistered) {
+                return(
+                    <p>Please finish registration! <NavLink to="/welcome">Register here!</NavLink> </p>
+                )
+            } else {
+                return(
+                    <ThemeContext.Provider value={this.state.theme}>
+                        <div className = "homeContainer"> 
+                                <Header />
+                                <div className = "row">
+                                    <div className = "col s2">Sidebar!</div>
+                                    <div className = "col s10">
+                                        {/* <button onClick = {this.toggleTheme}>Change theme!</button>
+                                        Welcome to {this.state.comicName}! */}
+                                        <ComicComponent />   
+                                    </div>
+                                </div>
                         </div>
-                    </div>
-                </ThemeContext.Provider>
-            )
+                    </ThemeContext.Provider>
+                )
+            }
         }
     }
 }

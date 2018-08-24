@@ -82,18 +82,10 @@ class Dashboard extends Component {
                                 <header className="App-header">
                                     <h1 className="App-title">Comic Dash</h1>
                                 </header>
-                                <p className="App-intro">
-                                    Welcome to the dash!
-                                </p>
+                                <h2>Welcome to the dash!</h2>
                                 <div className = "container">
                                     <div className = "row">
-                                        <div className = "col s3">
-                                            <p><NavLink to="/">Home</NavLink></p>
-                                            <p><NavLink to="/comics">Comics</NavLink></p>
-                                            <p><NavLink to="/settings">Settings</NavLink></p>
-                                            <p><NavLink to="/login" onClick = {this.logout}>Logout</NavLink></p>
-                                        </div>
-                                        <div className = "col s9">
+                                        <div className = "col s12">
                                             <Tabs defaultSelectedIndex={0}>
                                                 <Tab value="pane-1" label="Upload Comic" >
                                                     <UploadComicComponent />
@@ -107,6 +99,10 @@ class Dashboard extends Component {
                                             </Tabs>
                                         </div> 
                                     </div> {/*end row */}
+                                    <div className = "row">
+                                         <button onClick= {this.logout} className = "btn btn-large">Log Out</button>
+                                         <NavLink to= "/" className = "btn btn-large">Go Home</NavLink>
+                                    </div>
                                 </div>
                             </div>                           
                         </div>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import firebase from '../firebase';
-import {Button, Icon, Toast} from 'react-materialize';
+import {Button, Icon, Toast, Input} from 'react-materialize';
 
 class UploadComicComponent extends Component {
 
@@ -83,23 +83,16 @@ class UploadComicComponent extends Component {
         return(
             <div>
                 <form onSubmit = {this.uploadHandler} id ="upload-comic-form">
-                    <label className="label">First Name</label>
-                    <div className="control">
-                        <input className="input" type="text" name="author" value={this.state.author} onChange={this.handleChange}/>
-                    </div>
-                    <label className="label">Post Title</label>
-                    <div className="control">
-                        <input className="input" type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
-                    </div>
-                    <label className="label">Content</label>
-                    <div className="control">
-                        <input className="input" type="textarea" name="content" value={this.state.content} onChange={this.handleChange}/>
-                    </div>
-                    <h4>Add a new comic!</h4>
-                    <label htmlFor = "comicName">Comic's name:</label>
-                    <input type="text" onChange = {this.handleChange} name = "comicName" />
-                    <input type="file" onChange={this.fileChangedHandler} />
-                    <button type= "submit" >Upload!</button>
+                <h3>Add a new comic!</h3>
+                    <input className="input" placeholder = "Your name" type="text" name="author" value={this.state.author} onChange={this.handleChange}/>
+            
+                     <input className="input" placeholder = "What would like to title this post?" type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
+        
+                    <div><Input s={12} type = "textarea" placeholder = "What's this comic about?"></Input></div>
+                    
+                    <Input type="text" placeholder = "Name of the comic" onChange = {this.handleChange} name = "comicName" s={6}/>
+                    <Input type="file" label="File" s={6} onChange={this.fileChangedHandler} placeholder = "Add the comic's image file" />
+                    <p style = {{textAlign: "center"}}><button class = "btn block" type= "submit" >Upload!</button></p>
                 </form>
             </div>
         )

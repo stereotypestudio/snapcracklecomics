@@ -1,0 +1,58 @@
+
+p {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+}
+.comic-button{
+    margin: 20px 10px;
+}
+
+h1, h2, h3, h4 {
+font-family: 'Indie Flower', cursive;
+}
+
+h1{
+    font-size: 5em;
+}
+
+h2{
+    font-size: 4em;
+}
+
+h3{
+    font-size: 3em;
+}
+
+.homeContainer {
+    padding: 0 20px 20px;
+    text-align: center;
+}
+
+.comicComments form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.card {
+    text-align: left;
+}
+
+.loginPanel {
+    padding: 20px;
+    width: 50%;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.loginPanel button {
+    margin: 30px;
+    width: 80%;
+}
+
+.block {
+    width: 80%;
+    text-align: center;
+}
+.card.horizontal .card-image img {
+    max-width: 200px;
+}

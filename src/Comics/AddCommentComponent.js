@@ -8,7 +8,8 @@ class AddCommentComponent extends Component {
         super(props);
         this.state = {
             comment: "",
-            author: ""
+            author: "", 
+            profileUrl: ""
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -33,9 +34,11 @@ class AddCommentComponent extends Component {
             postId: this.props.comicId,
             author: this.state.author,
             comment: this.state.comment,
+            profileUrl: this.state.profileUrl
         })
         .then(() => {
             window.Materialize.toast('Comment added!', 3000)
+            this.setState({author: ""});
         })
         .catch((error) => {
             console.log(error)
@@ -45,23 +48,21 @@ class AddCommentComponent extends Component {
     render(){
 
         return(
-        <div className= "App">
-            <div className ="row">
-                <div className = "col s6">
-                    <form onSubmit = {this.handleSubmit}>
-                        <label className="label">Your name</label>
+                <div>
+                    <h3>Add a comment!</h3>
+                    <form onSubmit = {this.handleSubmit} id="comment-form">
                         <div className="control">
-                            <input className="input" type="text" name="author" value={this.state.author} onChange={this.handleChange}/>
+                            <input className="input" value={this.state.author} placeholder="Your name" type="text" name="author" value={this.state.author} onChange={this.handleChange}/>
                         </div>
-                        <label className="label">Your comment</label>
                         <div className="control">
-                            <input className="input" type="text" name="comment" value={this.state.comment} onChange={this.handleChange}/>
+                            <input className="input" value={this.state.content} placeholder="Your comment" type="text" name="comment" value={this.state.comment} onChange={this.handleChange}/>
+                        </div>
+                        <div className="control">
+                            <input className="input" value={this.state.profileUrl} placeholder="Profile Pic URL" type="text" name="profileUrl" value={this.state.profileUrl} onChange={this.handleChange}/>
                         </div>
                         <button className = "btn" type = "submit">Submit Comment</button>
-                    </form>
+                    </form>  
                 </div>
-            </div>    
-        </div>
         )
     }
 }

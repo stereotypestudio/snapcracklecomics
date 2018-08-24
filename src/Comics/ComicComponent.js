@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import firebase from '../firebase';
 import { ThemeContext } from '../theme-settings';
 import AddCommentComponent from './AddCommentComponent';
+import '../custom-style.css';
 
 class ComicComponent extends Component {
 
@@ -47,16 +48,6 @@ class ComicComponent extends Component {
         .then(() => {
             this.checkNextandPrev();
             this.getComments(this.state.postId);
-            // const prev = fb.collection('comics')
-            // .orderBy("createdAt")
-            // .startAfter(this.state.currentImage)
-            // .limit(1).get()
-            // .then((nextComic) => {
-            //     console.log("nextComic2", nextComic)
-            //     if(nextComic.empty === true){
-            //         this.setState({noNext: true})
-            //     }
-            // });
         });
         
     }
@@ -82,15 +73,6 @@ class ComicComponent extends Component {
         })
         .then(() => {
             this.checkNextandPrev();
-            // const prev = fb.collection('comics')
-            // .orderBy("createdAt", "desc")
-            // .startAfter(this.state.currentImage)
-            // .limit(1).get()
-            // .then((prevComic) => {
-            //     if(prevComic.empty === true){
-            //         this.setState({noPrev: true})
-            //     }
-            // })
         });
     }
 
@@ -116,16 +98,6 @@ class ComicComponent extends Component {
         })
         .then(() => {
             this.checkNextandPrev();
-            // const prev = fb.collection('comics')
-            // .orderBy("createdAt")
-            // .startAfter(this.state.currentImage)
-            // .limit(1).get()
-            // .then((nextComic) => {
-            //     console.log("nextComic2", nextComic)
-            //     if(nextComic.empty === true){
-            //         this.setState({noNext: true})
-            //     }
-            // });
         })
     }
 
@@ -221,8 +193,10 @@ class ComicComponent extends Component {
     getComments(post){
         console.log("Getting comments");
         const fb = firebase.firestore();
-        const commentsRef = fb.collection("comments").where("postId", "==", post).get()
-        .then((docs) => {
+        // const commentsRef = fb.collection("comments").where("postId", "==", post).get()
+        // .then((docs) => {
+        fb.collection("comments").where("postId", "==", post)
+        .onSnapshot((docs) => {
             var comments = []
             docs.forEach((comment) => {    
                 comments.push(comment.data())
@@ -231,9 +205,9 @@ class ComicComponent extends Component {
             this.setState({comments: comments})
             console.log(this.state.comments);
         })
-        .catch((error) => {
-            console.log(error)
-        })
+        // .catch((error) => {
+        //     console.log(error)
+        // })
 
     }
 
@@ -242,27 +216,48 @@ class ComicComponent extends Component {
         // var comments = this.state.comments.map((comment) => <li key ={comment.author.toString()}>{comment.comment.toString()}</li> );
         var comments = this.state.comments;
         var commentsList = comments.map(function(comment){
-                return <div><li>{comment.author}</li><li> {comment.comment}</li></div>
+                return (<div>
+                            <div className="card horizontal">
+                                <div className="card-image">
+                                    <img src={comment.profileUrl} />
+                                </div>
+                                <div className="card-stacked">
+                                    <div className="card-content">
+                                        <h4>{comment.author}</h4>
+                                        <p>{comment.comment}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
         })
             return(
                 <ThemeContext.Consumer>
                     {theme => (
-                    <div>
-                    <h2>{this.state.comicName}</h2>
-                        <img style = {{width: "50%"}} id = "myimg"/>
                         <div>
-                            <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn " onClick = {this.firstComic} disabled = {this.state.noPrev}>First Comic</button>
-                            <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn" onClick = {this.prevComic} disabled = {this.state.noPrev}>Previous Comic</button>
-                            <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn" onClick = {this.nextComic} disabled = {this.state.noNext}>Next Comic</button>
-                            <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn" onClick = {this.lastComic} disabled = {this.state.noNext}>Last Comic</button>
+                            <div className = "comicImg">
+                                <h1>{this.state.comicName}</h1>
+                                <img style = {{width: "70%"}} id = "myimg"/>
+                            </div>
+                            <div className = "comicButtons">
+                                <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn comic-button" onClick = {this.firstComic} disabled = {this.state.noPrev}>First Comic</button>
+                                <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn comic-button" onClick = {this.prevComic} disabled = {this.state.noPrev}>Previous Comic</button>
+                                <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn comic-button" onClick = {this.nextComic} disabled = {this.state.noNext}>Next Comic</button>
+                                <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn comic-button" onClick = {this.lastComic} disabled = {this.state.noNext}>Last Comic</button>
+                            </div>
+                            <div className = "comicPost">
+                                <div className = "card">
+                                    <div className = "card-content">
+                                        <h2 class="card-title">{this.state.postTitle}</h2>
+                                        <p>{this.state.postContent}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className = "comicComments">
+                                <ul>{commentsList}</ul>
+                                <AddCommentComponent comicId = {this.state.currentImage.id} />
+                            </div>
                         </div>
-
-                        <h3>{this.state.postTitle}</h3>
-                        <p>{this.state.postContent}</p>
-                        <ul>{commentsList}</ul>
-    
-                        <AddCommentComponent comicId = {this.state.currentImage.id} />      
-                    </div>
                 )}
                 </ThemeContext.Consumer>
             )

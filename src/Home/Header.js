@@ -33,8 +33,12 @@ class Header extends Component {
 
         return(
             <header>
-                <img src="" alt="" id = "logo" />
-                <img src="" alt="" id = "header" />
+                <div className = "row">
+                    <div className = "col s12">
+                        <img style = {{width: "20%"}} src="" alt="" id = "logo" />
+                        <img  style = {{width: "80%"}} src="" alt="" id = "header" />
+                    </div>
+                </div>
             </header>
         )
     }

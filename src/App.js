@@ -15,8 +15,8 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      backgroundColor: "#000000",
-      textColor: "#FFFFFF",
+      isLoading: true,
+      isRegistered: false
     }
   }
 
@@ -24,40 +24,33 @@ class App extends Component {
 
   componentDidMount(){
     const fb = firebase.firestore();
-    const settingsRef = fb.collection("setup").doc("theme").get()
+    const settingsRef = fb.collection("settings").doc("setup").get()
     .then((doc) => {
-      this.setState({backgroundColor: doc.data().backgroundColor, textColor: doc.data().textColor})
-      console.log("App state", this.state)
+      if(doc.exists === true){
+        this.setState({isRegistered: true})
+        this.setState({isLoading: false})
+      } else {
+        this.setState({isLoading: false})
+      }
     })
+
   
   }
 
   render() {
 
-    return(
-      <Router>
-        <div>         
-          <Route path="/" component={Home} exact />
-          <Route path="/welcome" component={Welcome}  />
-          <Route path="/dashboard" component={Dashboard}  />
-          <Route path="/comics" component={AllComicComponent} />
-          <Route path="/login" component={Login}  />
-          <Route path="/settings" component={Settings}  />
-        </div>
-      </Router>
-    )
+      return(
+          <Router>
+            <div>         
+              <Route path="/" component={Home} exact />
+              <Route path="/welcome" component={Welcome}  />
+              <Route path="/dashboard" component={Dashboard}  />
+              <Route path="/comics" component={AllComicComponent} />
+              <Route path="/login" component={Login}  />
+              <Route path="/settings" component={Settings}  />
+            </div>
+          </Router>
+        )
   }
 }
-
-// export const themes = {
-//   light: {
-//       text: this.state.textColor,
-//       background: this.state.backgroundColor
-//   },
-//   dark: {
-//       text: "#FFFFFF",
-//       background: "#EEEEEE"
-//   }
-// }
-// export const ThemeContext = React.createContext(themes.dark);
 export default App;

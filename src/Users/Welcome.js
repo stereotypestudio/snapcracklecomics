@@ -33,12 +33,17 @@ class Welcome extends Component {
     componentDidMount(){
         firebase.firestore().collection('settings').doc('setup').get()
         .then((doc) => {
-            console.log(doc.data())
-            if(doc.data().registered === true) {
-                this.setState({registeredAlready: true});
-                this.setState({isLoading: false});
-            } 
-            else {
+            if(doc.exists === true){
+                console.log(doc.data())
+                if(doc.data().registered === true) {
+                    this.setState({registeredAlready: true});
+                    this.setState({isLoading: false});
+                } 
+                else {
+                    this.setState({isLoading: false})
+                }
+            } else{
+                console.log("No doc found")
                 this.setState({isLoading: false})
             }
         })
@@ -116,7 +121,6 @@ class Welcome extends Component {
             } else{
                 return ( 
                     //Get admin information: Name, email, password, security question, profile picture
-                    
                     <div className = "container">
                         <div className="App">
                             <header className="App-header">

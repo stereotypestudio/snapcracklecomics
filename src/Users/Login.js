@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import firebase, {auth, provider} from '../firebase';
 import {Router, Route, Redirect } from 'react-router-dom';
+import Header from '../Home/Header';
 
 class Login extends Component {
 
@@ -30,16 +31,6 @@ class Login extends Component {
 
     handleSubmit(event){
         event.preventDefault();
-        // const fb = firebase.firestore();
-        // const user = fb.collection('users').where("username", "==", this.state.username).get()
-        // .then((doc) => {
-        //     if(doc.exists){
-        //         //redirct to dashboard
-        //         <Redirect to="/dashboard"/>
-        //     } else {
-        //         //not found
-        //     }
-        // })
         auth.signInWithPopup(provider)
         .then((doc) => {
             return doc.user.uid
@@ -65,19 +56,15 @@ class Login extends Component {
             return <Redirect to="/" />
         } else {
         return(
-            <div className = "container">
-            <div className = "row">
-            <div className = "col s6">
-            <h4>Log in:</h4>
-            <form onSubmit = {this.handleSubmit}>
-                <label htmlFor="username">Email</label>
-                <input type="email" onChange = {this.handleChange} name = "email" />
-                <label htmlFor="password">Password</label>
-                <input type="password" onChange = {this.handleChange} name = "password" />
-                <button type = "submit">Login</button>
-            </form>
-            </div>
-            </div>
+           <div>
+                <Header />
+                <div className = "loginPanel card">
+                    <h2>Log in with your Google account:</h2>
+                
+                    <form onSubmit = {this.handleSubmit}>
+                     <button className = "btn" type = "submit">Login</button>
+                    </form>
+                </div>
             </div>
         )
     }
