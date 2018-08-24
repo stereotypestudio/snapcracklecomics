@@ -33,6 +33,7 @@ class Home extends Component {
                 this.setState({comicName: doc.data().comicName});
             })
             this.setState({notRegistered: false});
+            this.setState({isLoading: false})
           } else {
             this.setState({notRegistered: true});
             this.setState({isLoading: false})

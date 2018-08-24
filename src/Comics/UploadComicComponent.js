@@ -68,6 +68,7 @@ class UploadComicComponent extends Component {
                  content: this.state.content,
                  comicId: doc.id
              })
+             console.log("Content:" , this.state.content);
          })
          .then(() => {
              window.Materialize.toast('Succesfully uploaded!', 3000)
@@ -88,7 +89,7 @@ class UploadComicComponent extends Component {
             
                      <input className="input" placeholder = "What would like to title this post?" type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
         
-                    <div><Input s={12} type = "textarea" placeholder = "What's this comic about?"></Input></div>
+                    <div><Input s={12} type = "textarea" placeholder = "What's this comic about?" onChange = {this.handleChange} name = "content"></Input></div>
                     
                     <Input type="text" placeholder = "Name of the comic" onChange = {this.handleChange} name = "comicName" s={6}/>
                     <Input type="file" label="File" s={6} onChange={this.fileChangedHandler} placeholder = "Add the comic's image file" />

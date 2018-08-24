@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import firebase from '../firebase';
 import {Router, Route, Redirect } from 'react-router-dom';
+import {Button, Icon, Toast, Input} from 'react-materialize';
 
 class Settings extends Component {
 
@@ -46,6 +47,8 @@ class Settings extends Component {
             var storageRef = firebase.storage().ref();
             var headerImagesRef = storageRef.child("siteImages/header");
             headerImagesRef.put(this.state.headerImageFile);
+            window.Materialize.toast('Setting updated!', 3000)
+
         })
         .catch((error) => {
             console.log("Couldn't update settings", error);
@@ -77,15 +80,11 @@ class Settings extends Component {
                         <label htmlFor="comicName">Comic's Name</label>
                         <input type="text" onChange = {this.handleChange} name = "comicName" />
                     </div>
-                    <div>
-                        <label htmlFor = "logoImageFile">Logo Image</label>
-                        <input type="file" onChange={this.LogoFileChangedHandler} />
-                    </div>
-                    <div>
-                        <label htmlFor = "headerImageFile">Header Image</label>
-                        <input type="file" onChange={this.HeaderFileChangedHandler} />
-                    </div>
-                        <button type = "submit">Save</button>
+                    <h4>Logo Image File</h4>
+                    <Input type="file"label="Pick File" placeholder = "Logo" onChange = {this.LogoFileChangedHandler} name = "logoImageFile" s={12}/>
+                     <h4>And a header image?</h4>
+                    <Input type="file" label="Pick File" placeholder = "Header Image" onChange = {this.HeaderFileChangedHandler} name = "headerImageFile" s={12}/>
+                    <button className = "btn btn-large" type = "submit">Save</button>
                 </form>
             </div>
         )

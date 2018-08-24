@@ -38,8 +38,8 @@ class ComicComponent extends Component {
                 img.src = doc.data().imageUrl;
                 this.setState({currentImage: doc});
                 this.setState({comicName: doc.data().comicName})
-                console.log(this.state.currentImage);
-                console.log(doc.id);
+                console.log("this.state.currentImage", this.state.currentImage);
+                console.log("doc.id", doc.id);
             })
         })
         .then(() => {

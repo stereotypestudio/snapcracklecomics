@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import firebase, {auth, provider} from '../firebase';
-import logo from '../logo.svg';
 import bcrypt from 'bcryptjs';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
+import {Button, Icon, Toast, Input} from 'react-materialize';
 
 class Welcome extends Component {
 
@@ -12,9 +12,6 @@ class Welcome extends Component {
             firstName: "",
             lastName: "",
             username:"",
-            email:"",
-            securityQuestion:"",
-            securityAnswer:"",
             profilePicture: null,
             comicName: "",
             logoFile: null,
@@ -27,6 +24,8 @@ class Welcome extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.LogoHandleChange = this.LogoHandleChange.bind(this);
+        this.HeaderHandleChange = this.HeaderHandleChange.bind(this);
         this.fireRedirect = this.fireRedirect.bind(this);
     }
 
@@ -59,6 +58,14 @@ class Welcome extends Component {
         });
     }
 
+    LogoHandleChange(event){
+        this.setState({logoFile: event.target.files[0]});
+    }
+
+    HeaderHandleChange(event){
+        this.setState({headerImageFile: event.target.files[0]});
+    }
+
     fireRedirect(){
         this.setState({
             fireRedirect: true
@@ -66,7 +73,7 @@ class Welcome extends Component {
     }
 
     handleSubmit(event){
-
+        console.log("Submitting")
         event.preventDefault();
         var s = this.state;
         //pop up google to sign in
@@ -80,10 +87,7 @@ class Welcome extends Component {
             firebase.firestore().collection('users').doc(id).set({
                 firstname: s.firstName,
                 lastname: s.lastName,
-                email: s.email,
                 username: s.username,
-                securityQuestion: s.securityQuestion,
-                securityAnswer: s.securityAnswer,
                 isAdmin: true
             })
         })
@@ -101,6 +105,17 @@ class Welcome extends Component {
             })
         })
         .then(() => {
+            var storageRef = firebase.storage().ref()
+            var siteImagesRef = storageRef.child("siteImages/logo");
+            siteImagesRef.put(this.state.logoFile);
+        })
+        .then(() => {
+            var storageRef = firebase.storage().ref();
+            var headerImagesRef = storageRef.child("siteImages/header");
+            headerImagesRef.put(this.state.headerImageFile);
+        })
+        .then(() => {
+            console.log("Redirect")
             this.fireRedirect();
         })
         .catch((error) => {
@@ -124,38 +139,21 @@ class Welcome extends Component {
                     <div className = "container">
                         <div className="App">
                             <header className="App-header">
-                                <img src={logo} className="App-logo" alt="logo" />
                                 <h3 className="App-title">Comic Dash</h3>
                             </header>
                             <div className = "row">
-                                <div className = "col s6">
+                                <div className = "col s12">
 
-                                <h3>Admin:</h3>
+                                <h3>Tell us about you:</h3>
                                     <form onSubmit = {this.handleSubmit}>
-                                        <label className="label">First Name</label>
                                         <div className="control">
-                                            <input className="input" type="text" name="firstName" value={this.state.firstName} onChange={this.handleChange}/>
+                                            <input className="input" placeholder = "First Name" type="text" name="firstName" value={this.state.firstName} onChange={this.handleChange}/>
                                         </div>
-                                        <label className="label">Last Name</label>
                                         <div className="control">
-                                            <input className="input" type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange}/>
+                                            <input className="input" placeholder = "Last Name" type="text" name="lastName" value={this.state.lastName} onChange={this.handleChange}/>
                                         </div>
-
-                                        <label className="label">Username</label>
                                         <div className="control">
-                                            <input className="input" type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
-                                        </div>
-                                        <label className="label">Email</label>
-                                        <div className="control">
-                                            <input className="input" type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
-                                        </div>
-                                        <label className="label">Password</label>
-                                        <div className="control">
-                                            <input className="input" type="text" name="password" value={this.state.password} onChange={this.handleChange}/>
-                                        </div>
-                                        <label className="label">Confirm Password</label>
-                                        <div className="control">
-                                            <input className="input" type="text" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange}/>
+                                            <input className="input" placeholder = "And a username" type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
                                         </div>
                                         
                                     {// Get information about comic site: name of comic/site, logo, header image, colors, first comic (optional)
@@ -163,14 +161,15 @@ class Welcome extends Component {
                                         //Optional pages: About
                                     }
 
-                                    <h3>Comic:</h3>
+                                    <h3>And the comic:</h3>
                                     <label className="label">Comic's Name</label>
                                     <div className="control">
                                         <input className="input" type="text" name="comicName" value={this.state.comicName} onChange={this.handleChange}/>
                                     </div>
-                                    <div>
-                                        <input type="file" onChange={this.fileChangedHandler} />
-                                    </div>
+                                    <h4>What's your comic's logo?</h4>
+                                    <Input type="file"label="Pick File" placeholder = "Logo" onChange = {this.LogoHandleChange} name = "logoFile" s={12}/>
+                                    <h4>And a header image?</h4>
+                                    <Input type="file" label="Pick File" placeholder = "Header Image" onChange = {this.HeaderHandleChange} name = "headerFile" s={12}/>
 
                                     <button type= "submit" >Submit</button>
                                     </form>
