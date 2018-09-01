@@ -19,7 +19,8 @@ class Welcome extends Component {
             firstComic: null,
             fireRedirect: false,
             isLoading: true,
-            registeredAlready: false
+            registeredAlready: false, 
+            summary: ""
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -95,21 +96,26 @@ class Welcome extends Component {
             console.log(auth.currentUser.displayName)
         })
         .then(function(){ //set comic params/details
+            console.log("Setting comic settings")
             firebase.firestore().collection('setup').doc('comicSettings').set({
                 comicName: s.comicName
             })
         })
         .then(function(docRef){ //set up initial setup so doesn't repeat in future
+            console.log("Setting registration")
             firebase.firestore().collection('settings').doc("setup").set({
                     registered: true
             })
+        
         })
         .then(() => {
+            console.log("setting logo")
             var storageRef = firebase.storage().ref()
             var siteImagesRef = storageRef.child("siteImages/logo");
             siteImagesRef.put(this.state.logoFile);
         })
         .then(() => {
+            console.log("setting header")
             var storageRef = firebase.storage().ref();
             var headerImagesRef = storageRef.child("siteImages/header");
             headerImagesRef.put(this.state.headerImageFile);
@@ -164,10 +170,13 @@ class Welcome extends Component {
                                     <h3>And the comic:</h3>
                                     <label className="label">Comic's Name</label>
                                     <div className="control">
-                                        <input className="input" type="text" name="comicName" value={this.state.comicName} onChange={this.handleChange}/>
+                                        <input className="input" placeholder = "Name of your comic series" type="text" name="comicName" value={this.state.comicName} onChange={this.handleChange}/>
+                                    </div>
+                                    <div>
+                                        <input className ="input" placeholder = "Summary of the series" type = "text" name = "summary"value = {this.state.summary} onChange = {this.handleChange} />
                                     </div>
                                     <h4>What's your comic's logo?</h4>
-                                    <Input type="file"label="Pick File" placeholder = "Logo" onChange = {this.LogoHandleChange} name = "logoFile" s={12}/>
+                                    <Input  type="file"label="Pick File" placeholder = "Logo" onChange = {this.LogoHandleChange} name = "logoFile" s={12}/>
                                     <h4>And a header image?</h4>
                                     <Input type="file" label="Pick File" placeholder = "Header Image" onChange = {this.HeaderHandleChange} name = "headerFile" s={12}/>
 

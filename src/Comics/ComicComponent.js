@@ -157,8 +157,11 @@ class ComicComponent extends Component {
         .startAfter(this.state.currentImage)
         .limit(1).get()
         .then((nextComic) => {
+            console.log("Get next comic:", nextComic)
             if(nextComic.empty === true){
                 this.setState({noNext: true})
+            } else {
+                this.setState({noNext: false})
             }
         })
         .then(() => {
@@ -166,8 +169,11 @@ class ComicComponent extends Component {
             .startAfter(this.state.currentImage)
             .limit(1).get()
             .then((prevComic) => {
+                console.log("Get prev comic:", prevComic)
                 if(prevComic.empty === true){
                     this.setState({noPrev: true})
+                } else {
+                    this.setState({noPrev: false})
                 }
             })
         })
@@ -237,7 +243,7 @@ class ComicComponent extends Component {
                         <div>
                             <div className = "comicImg">
                                 <h1>{this.state.comicName}</h1>
-                                <img style = {{width: "70%"}} id = "myimg"/>
+                                <img style = {{width: "90%"}} id = "myimg"/>
                             </div>
                             <div className = "comicButtons">
                                 <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn comic-button" onClick = {this.firstComic} disabled = {this.state.noPrev}>First Comic</button>

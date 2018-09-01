@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom"
 import ComicComponent from '../Comics/ComicComponent';
 import Header from '../Home/Header';
 import {ThemeContext, themes} from '../theme-settings';
+import SidebarComponent from '../Sidebar/SidebarComponent';
 
 
 class Home extends Component {
@@ -66,8 +67,11 @@ class Home extends Component {
                         <div className = "homeContainer"> 
                                 <Header />
                                 <div className = "row">
-                                    <div className = "col s2">Sidebar!</div>
-                                    <div className = "col s10">
+                                    <div className = "col s3">
+                                        <SidebarComponent />
+                                    
+                                    </div>
+                                    <div className = "col s9">
                                         {/* <button onClick = {this.toggleTheme}>Change theme!</button>
                                         Welcome to {this.state.comicName}! */}
                                         <ComicComponent />   

@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "comicgenie-edf24"
+    "default": "comicgenie-edf24",
+    "Original": "comicgenie-edf24"
   }
 }
