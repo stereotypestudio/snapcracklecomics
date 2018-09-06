@@ -93,7 +93,7 @@ class UploadComicComponent extends Component {
                     
                     <Input type="text" placeholder = "Name of the comic" onChange = {this.handleChange} name = "comicName" s={6}/>
                     <Input type="file" label="File" s={6} onChange={this.fileChangedHandler} placeholder = "Add the comic's image file" />
-                    <p style = {{textAlign: "center"}}><button class = "btn block" type= "submit" >Upload!</button></p>
+                    <p style = {{textAlign: "center"}}><button className = "btn block" type= "submit" >Upload!</button></p>
                 </form>
             </div>
         )

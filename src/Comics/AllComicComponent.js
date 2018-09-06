@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import firebase from '../firebase';
+import ComicInfoComponent from './ComicInfoComponent';
 
 class AllComicComponent extends Component {
 
@@ -33,34 +34,16 @@ class AllComicComponent extends Component {
 
     }
 
-    editComic(comic_id){
-        console.log("getting comic", comic_id)
-       const fb = firebase.firestore();
-       const thisComic = fb.collection('comics').doc(comic_id).get()
-       .then((comic) => {
-           console.log(comic.data());
-       })
+    editComic(comic_id, comic_url){
+     console.log(comic_id, comic_url)
+     
     }
 
     render(){
-        var comics = this.state.currentComics.map((comic, i) => 
-            <div className = "card horizontal" key ={i}>
-                <div className = "card-image">
-                    <img src = {comic.data().imageUrl} alt = {comic.data().comicName} />
-                </div>
-                <div className = "card-stacked">
-                    <div className = "card-content">
-                    <span className = "card-title">{comic.data().comicName}</span>
-                        Some filler content
-                        Comic ID {comic.id}
-                    </div>
-                    <div className = "card-action">
-                        <a href = "#" onClick = {this.editComic(comic.id)}>Edit Comic</a>
-                        <a href = "#">Delete Comic</a>
-                    </div>
-                </div>
-            </div> 
-    
+        var comics = this.state.currentComics.map((comic, i) => {
+     
+           return <ComicInfoComponent key ={comic.id} comicTitle = {comic.data().comicName} id = {comic.id} imageUrl = {comic.data().imageUrl} editComic = {this.editComic} />
+        }
         );
         return(
             <div>
