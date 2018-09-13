@@ -242,8 +242,8 @@ class ComicComponent extends Component {
                     {theme => (
                         <div>
                             <div className = "comicImg">
-                                <h1>{this.state.comicName}</h1>
-                                <img style = {{width: "90%"}} id = "myimg"/>
+                                <h2>{this.state.comicName}</h2>
+                                <img className = "comic-image" style = {{width: "90%"}} id = "myimg"/>
                             </div>
                             <div className = "comicButtons">
                                 <button style = {{backgroundColor: theme.background, color: theme.text}} className = "waves-effect waves-light btn comic-button" onClick = {this.firstComic} disabled = {this.state.noPrev}>First Comic</button>
@@ -254,7 +254,7 @@ class ComicComponent extends Component {
                             <div className = "comicPost">
                                 <div className = "card">
                                     <div className = "card-content">
-                                        <h2 class="card-title">{this.state.postTitle}</h2>
+                                        <h3 class="card-title">{this.state.postTitle}</h3>
                                         <p>{this.state.postContent}</p>
                                     </div>
                                 </div>

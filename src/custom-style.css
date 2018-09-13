@@ -8,7 +8,7 @@ p {
 }
 
 h1, h2, h3, h4 {
-font-family: 'Indie Flower', cursive;
+    font-family: 'Montserrat', sans-serif;
 }
 
 h1{
@@ -35,6 +35,7 @@ h3{
 
 .card {
     text-align: left;
+    border-radius: 10px;
 }
 
 .loginPanel {
@@ -55,4 +56,13 @@ h3{
 }
 .card.horizontal .card-image img {
     max-width: 200px;
+}
+
+.btn {
+    border-radius: 20px;
+
+}
+
+.comic-image {
+    margin-top: 20px;
 }

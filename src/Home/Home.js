@@ -67,11 +67,11 @@ class Home extends Component {
                         <div className = "homeContainer"> 
                                 <Header />
                                 <div className = "row">
-                                    <div className = "col s3">
+                                    <div className = "col s12 m3">
                                         <SidebarComponent />
                                     
                                     </div>
-                                    <div className = "col s9">
+                                    <div className = "col s12 m9">
                                         {/* <button onClick = {this.toggleTheme}>Change theme!</button>
                                         Welcome to {this.state.comicName}! */}
                                         <ComicComponent />   
